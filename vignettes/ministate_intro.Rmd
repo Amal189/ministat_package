@@ -1,4 +1,4 @@
----
+# ---
 title: "ministate_intro"
 output: rmarkdown::html_vignette
 vignette: >
