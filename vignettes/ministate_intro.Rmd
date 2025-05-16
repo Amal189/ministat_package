@@ -1,0 +1,39 @@
+---
+title: "ministate_intro"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ministate_intro}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ministate)
+```
+
+
+# Overzicht
+
+Dit pakket `ministate` bevat eenvoudige functies voor statistische berekeningen, zoals gemiddelde, mediaan en standaarddeviatie.
+
+# Voorbeeld
+
+```{r}
+library(ministate)
+
+x <- c(1, 2, 3, NA)
+
+gemiddelde(x)
+mediaan(x)
+sd_berekenen(x)
+samenvatting(x)
+```
+
+
