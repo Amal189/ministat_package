@@ -7,7 +7,7 @@ Authors@R:
       given = "Amal",
       email = "Jasmijnbloem@gmail.com",
       role = c("aut", "cre"))
-Description: Bereken het gemiddelde, de mediaan, de standaarddeviatie en genereer een samenvattende statistiektabel.
+Description: functies voor statistische berekeningen, zoals gemiddelde, mediaan, modus, standaarddeviatie, en een overzichtelijke samenvattingstabel.
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.3.2
