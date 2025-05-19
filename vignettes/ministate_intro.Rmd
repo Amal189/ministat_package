@@ -22,20 +22,87 @@ library(ministate)
 
 
 # Overzicht
-
-Dit pakket `ministate` bevat eenvoudige functies voor statistische berekeningen, zoals gemiddelde, mediaan en standaarddeviatie.
+Dit pakket ministate bevat eenvoudige functies voor statistische berekeningen, zoals gemiddelde, mediaan, modus, standaarddeviatie, en een overzichtelijke samenvattingstabel.
 
 # Voorbeeld
+
+Met een simple dataset.
 
 ```{r}
 library(ministate)
 
-x <- c(1, 2, 3, NA)
+x <- c(1, 2, 2, 3, NA)
 
+# Basisstatistieken
 gemiddelde(x)
 mediaan(x)
+modus(x)
+aantal(x)
+min_(x)
+max_(x)
+range_(x)
+kwartielen(x)
+iqr_(x)
 sd_berekenen(x)
-samenvatting(x)
+```
+
+# samenvatting
+De functie sam() geeft een overzichtelijke tabel met alle belangrijke statistieken:
+
+```{r}
+sam(x)
+```
+
+
+# voorbeeld 2
+
+Complexe dataset met negatieve waarden, decimalen en uitschieters
+```{r}
+# Complexe dataset met negatieve waarden, decimalen en uitschieters
+set.seed(42)
+x <- c(rnorm(40, mean = 100.5, sd = 15.2), -20, 0, 200, 500, NA, NA)
+
+aantal(x)
+gemiddelde(x)
+mediaan(x)
+modus(x)
+min_(x)
+max_(x)
+range_(x)
+iqr_(x)
+
+kwartielen(x)
+
+sd_berekenen(x)
+
+head(zscore(x), 10)
+
+sam(x)
+```
+
+
+# voorbeeld 3
+De faithful dataset bevat meetwaarden van eruptieduur (in minuten) van geisers in Yellowstone.Hier passen we onze functies toe op de eruptions kolom om basisstatistieken te berekenen en een overzichtstabel te maken.
+```{r}
+# Data uit R: geisers eruptie duur
+data("faithful")
+x <- faithful$eruptions
+
+# Statistieken toepassen
+aantal(x)
+gemiddelde(x)
+mediaan(x)
+modus(x)        # kan soms NA zijn als alle waarden uniek
+min_(x)
+max_(x)
+range_(x)
+iqr_(x)
+kwartielen(x)
+sd_berekenen(x)
+head(zscore(x), 10)
+
+sam(x)
+
 ```
 
 
