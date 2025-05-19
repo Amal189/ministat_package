@@ -2,16 +2,19 @@
 % Please edit documentation in R/sam.R
 \name{sam}
 \alias{sam}
-\title{Samenvattende statistieken van een vector}
+\title{Maak een interactieve samenvattingstabel van functie-uitkomsten}
 \usage{
-sam(x)
+sam(resultaten, nrows = 5)
 }
 \arguments{
-\item{x}{Een numerieke vector}
+\item{resultaten}{Een lijst of data.frame met de uitkomsten van je functies.}
+
+\item{nrows}{Aantal rijen per pagina (standaard 5).}
 }
 \value{
-Een tibble met kernstatistieken
+Een reactable widget met een overzichtelijke tabel.
 }
 \description{
-Samenvattende statistieken van een vector
+Deze functie vat de resultaten van meerdere analyses samen in een overzichtelijke,
+interactieve tabel met reactable.
 }

@@ -1,23 +1,28 @@
-#' Samenvattende statistieken van een vector
+#' Maak een interactieve samenvattingstabel van functie-uitkomsten
 #'
-#' @param x Een numerieke vector
-#' @return Een tibble met kernstatistieken
+#' Deze functie vat de resultaten van meerdere analyses samen in een overzichtelijke,
+#' interactieve tabel met reactable.
+#'
+#' @param resultaten Een lijst of data.frame met de uitkomsten van je functies.
+#' @param nrows Aantal rijen per pagina (standaard 5).
+#' @return Een reactable widget met een overzichtelijke tabel.
+#' @importFrom reactable reactable
 #' @export
-sam <- function(x) {
-  q <- kwartielen(x)
+sam <- function(resultaten, nrows = 5) {
+  # Voorbeeld: als 'resultaten' een lijst van named vectors/data.frames is,
+  # combineer je ze eerst in één data.frame/tibble.
 
-  tibble::tibble(
-    aantal               = n(x),
-    gemiddelde           = gem(x),
-    modus                = modus(x),
-    mediaan              = med(x),
-    minimum              = mini(x),
-    maximum              = maxi(x),
-    spreidingsbreedte    = spreid(x),
-    standaarddeviatie    = sdev(x),
-    interkwartielafstand = iqr(x),
-    Q1                   = q[1],
-    Q3                   = q[2]
+  # Als het al een data.frame is, kan je het direct tonen
+  if (!is.data.frame(resultaten)) {
+    resultaten <- do.call(rbind, lapply(resultaten, as.data.frame))
+  }
+
+  reactable::reactable(
+    resultaten,
+    defaultPageSize = nrows,
+    compact = TRUE,
+    filterable = TRUE,
+    sortable = TRUE
   )
 }
 
