@@ -1,38 +1,41 @@
-#' Overzicht van functies in het package
+#' Samenvattende statistiekentabel
 #'
-#' Genereert een interactieve tabel met alle functies in het \code{ministate} package en hun argumenten.
+#' Genereert een reactable-tabel met uitkomsten van alle statistiekfuncties op een vector.
 #'
-#' @return Een reactable-tabel met functienamen en hun argumenten.
+#' @param x Een numerieke vector
+#'
+#' @return Een reactable-tabel
 #' @export
 #'
 #' @examples
-#' sam()
-sam <- function() {
-  pkg_name <- "ministate"
-  objs <- ls(envir = asNamespace(pkg_name))
-  funs <- objs[sapply(objs, function(x) is.function(get(x, envir = asNamespace(pkg_name))))]
+#' sam(c(1, 2, 2, 3, NA))
+sam <- function(x) {
+  functies <- c("gem", "med", "modus", "n", "mini", "maxi", "spreid", "kwartielen", "iqr", "sdev")
 
-  df <- data.frame(
-    Functie = funs,
-    Argumenten = sapply(funs, function(f) {
-      args <- names(formals(get(f, envir = asNamespace(pkg_name))))
-      if (length(args) == 0) "geen" else paste(args, collapse = ", ")
-    }),
-    stringsAsFactors = FALSE
+  resultaten <- vapply(
+    functies,
+    function(f) {
+      waarde <- tryCatch(
+        get(f, envir = asNamespace("ministate"))(x),
+        error = function(e) NA
+      )
+      paste(waarde, collapse = " / ")
+    },
+    FUN.VALUE = character(1)
   )
 
   reactable::reactable(
-    df,
-    searchable = TRUE,
-    sortable = TRUE,
-    highlight = TRUE,
-    bordered = TRUE,
-    striped = TRUE,
-    resizable = TRUE,
-    defaultPageSize = 10,
+    data.frame(
+      Functie = functies,
+      Waarde = resultaten,
+      stringsAsFactors = FALSE
+    ),
     columns = list(
-      Functie = reactable::colDef(name = "Functienaam"),
-      Argumenten = reactable::colDef(name = "Argumenten")
-    )
+      Functie = reactable::colDef(name = "Functie"),
+      Waarde = reactable::colDef(name = "Waarde")
+    ),
+    striped = TRUE,
+    bordered = TRUE,
+    highlight = TRUE
   )
 }
