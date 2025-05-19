@@ -1,28 +1,40 @@
-#' Maak een interactieve samenvattingstabel van functie-uitkomsten
+#' Toon overzicht van functies in het package
 #'
-#' Deze functie vat de resultaten van meerdere analyses samen in een overzichtelijke,
-#' interactieve tabel met reactable.
+#' Genereert een interactieve tabel met alle functies in het \code{ministate} package en hun argumenten.
 #'
-#' @param resultaten Een lijst of data.frame met de uitkomsten van je functies.
-#' @param nrows Aantal rijen per pagina (standaard 5).
-#' @return Een reactable widget met een overzichtelijke tabel.
-#' @importFrom reactable reactable
+#' @return Een reactable-tabel met functienamen en argumenten.
 #' @export
-sam <- function(resultaten, nrows = 5) {
-  # Voorbeeld: als 'resultaten' een lijst van named vectors/data.frames is,
-  # combineer je ze eerst in één data.frame/tibble.
+#'
+#' @examples
+#' show_functions_table()
+show_functions_table <- function() {
+  pkg_name <- "ministate"
+  objs <- ls(envir = asNamespace(pkg_name))
+  funs <- objs[sapply(objs, function(x) is.function(get(x, envir = asNamespace(pkg_name))))]
 
-  # Als het al een data.frame is, kan je het direct tonen
-  if (!is.data.frame(resultaten)) {
-    resultaten <- do.call(rbind, lapply(resultaten, as.data.frame))
-  }
+  df <- data.frame(
+    Functie = funs,
+    Argumenten = sapply(funs, function(f) {
+      args <- names(formals(get(f, envir = asNamespace(pkg_name))))
+      if (length(args) == 0) "geen" else paste(args, collapse = ", ")
+    }),
+    stringsAsFactors = FALSE
+  )
 
   reactable::reactable(
-    resultaten,
-    defaultPageSize = nrows,
-    compact = TRUE,
-    filterable = TRUE,
-    sortable = TRUE
+    df,
+    searchable = TRUE,
+    sortable = TRUE,
+    highlight = TRUE,
+    bordered = TRUE,
+    striped = TRUE,
+    resizable = TRUE,
+    defaultPageSize = 10,
+    columns = list(
+      Functie = reactable::colDef(name = "Functienaam"),
+      Argumenten = reactable::colDef(name = "Argumenten")
+    )
   )
 }
+
 
