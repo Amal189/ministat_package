@@ -4,6 +4,6 @@
 #'
 #' @return De mediaan
 #' @export
-mediaan <- function(x) {
+med <- function(x) {
   median(x, na.rm = TRUE)
 }

@@ -4,6 +4,6 @@
 #'
 #' @return De standaarddeviatie
 #' @export
-sd_berekenen <- function(x) {
+sdev <- function(x) {
   sd(x, na.rm = TRUE)
 }

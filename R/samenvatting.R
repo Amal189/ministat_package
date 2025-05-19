@@ -1,13 +1,23 @@
-#' Geef een samenvatting van de vector
+#' Samenvattende statistieken van een vector
 #'
 #' @param x Een numerieke vector
-#'
-#' @return Een lijst met gemiddelde, mediaan en standaarddeviatie
+#' @return Een tibble met kernstatistieken
 #' @export
-samenvatting <- function(x) {
-  list(
-    gemiddelde = mean(x, na.rm = TRUE),
-    mediaan = median(x, na.rm = TRUE),
-    sd = sd(x, na.rm = TRUE)
+sam <- function(x) {
+  q <- kwartielen(x)
+
+  tibble::tibble(
+    aantal               = n(x),
+    gemiddelde           = gemiddelde(x),
+    modus                = modus(x),
+    mediaan              = mediaan(x),
+    minimum              = min_(x),
+    maximum              = max_(x),
+    spreidingsbreedte    = range_(x),
+    standaarddeviatie    = sd_berekenen(x),
+    interkwartielafstand = iqr_(x),
+    Q1                   = q[1],
+    Q3                   = q[2]
   )
 }
+

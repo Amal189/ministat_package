@@ -4,6 +4,6 @@
 #'
 #' @return Het gemiddelde
 #' @export
-gemiddelde <- function(x) {
+gem <- function(x) {
   mean(x, na.rm = TRUE)
 }
