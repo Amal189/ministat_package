@@ -2,16 +2,19 @@
 % Please edit documentation in R/sam.R
 \name{sam}
 \alias{sam}
-\title{Overzicht van functies in het package}
+\title{Samenvattende statistiekentabel}
 \usage{
-sam()
+sam(x)
+}
+\arguments{
+\item{x}{Een numerieke vector}
 }
 \value{
-Een reactable-tabel met functienamen en hun argumenten.
+Een reactable-tabel
 }
 \description{
-Genereert een interactieve tabel met alle functies in het \code{ministate} package en hun argumenten.
+Genereert een reactable-tabel met uitkomsten van alle statistiekfuncties op een vector.
 }
 \examples{
-sam()
+sam(c(1, 2, 2, 3, NA))
 }
