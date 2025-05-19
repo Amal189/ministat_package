@@ -1,41 +1,45 @@
-#' Samenvattende statistiekentabel
+#' Samenvattingstabel van verschillende statistische functies
 #'
-#' Genereert een reactable-tabel met uitkomsten van alle statistiekfuncties op een vector.
-#'
-#' @param x Een numerieke vector
-#'
-#' @return Een reactable-tabel
+#' @param x Een object (vector, data frame, lijst, etc) waar de functies op toegepast worden.
+#' @return Een reactable tabel met functienaam, omschrijving en resultaat.
 #' @export
-#'
-#' @examples
-#' sam(c(1, 2, 2, 3, NA))
 sam <- function(x) {
-  functies <- c("gem", "med", "modus", "n", "mini", "maxi", "spreid", "kwartielen", "iqr", "sdev")
+  safe_apply <- function(f, data) {
+    tryCatch({
+      val <- f(data)
+      if (is.numeric(val)) round(val, 2) else val
+    }, error = function(e) NA)
+  }
 
-  resultaten <- vapply(
-    functies,
-    function(f) {
-      waarde <- tryCatch(
-        get(f, envir = asNamespace("ministate"))(x),
-        error = function(e) NA
-      )
-      paste(waarde, collapse = " / ")
-    },
-    FUN.VALUE = character(1)
+  functies <- list(
+    gem = list(fun = ministate::gem, omschrijving = "Gemiddelde"),
+    med = list(fun = ministate::med, omschrijving = "Mediaan"),
+    modus = list(fun = ministate::modus, omschrijving = "Modus"),
+    n = list(fun = ministate::n, omschrijving = "Aantal niet-NA waarden"),
+    mini = list(fun = ministate::mini, omschrijving = "Minimumwaarde"),
+    maxi = list(fun = ministate::maxi, omschrijving = "Maximumwaarde"),
+    spreid = list(fun = ministate::spreid, omschrijving = "Verschil max - min"),
+    kwartielen = list(fun = ministate::kwartielen, omschrijving = "25% en 75% kwartiel"),
+    iqr = list(fun = ministate::iqr, omschrijving = "Interkwartielafstand"),
+    sdev = list(fun = ministate::sdev, omschrijving = "Standaarddeviatie")
   )
 
-  reactable::reactable(
-    data.frame(
-      Functie = functies,
-      Waarde = resultaten,
-      stringsAsFactors = FALSE
-    ),
-    columns = list(
-      Functie = reactable::colDef(name = "Functie"),
-      Waarde = reactable::colDef(name = "Waarde")
-    ),
-    striped = TRUE,
-    bordered = TRUE,
-    highlight = TRUE
+  resultaten <- lapply(functies, function(f) safe_apply(f$fun, x))
+
+  resultaten <- lapply(resultaten, function(res) {
+    if (is.numeric(res) && length(res) > 1 && !is.null(names(res))) {
+      paste0(names(res), ": ", round(res, 2), collapse = "; ")
+    } else {
+      res
+    }
+  })
+
+  df <- data.frame(
+    functienaam = names(functies),
+    omschrijving = sapply(functies, `[[`, "omschrijving"),
+    resultaat = unlist(resultaten),
+    stringsAsFactors = FALSE
   )
+
+  reactable::reactable(df, searchable = TRUE, highlight = TRUE, bordered = TRUE, striped = TRUE)
 }

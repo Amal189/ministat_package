@@ -2,19 +2,16 @@
 % Please edit documentation in R/sam.R
 \name{sam}
 \alias{sam}
-\title{Samenvattende statistiekentabel}
+\title{Samenvattingstabel van verschillende statistische functies}
 \usage{
 sam(x)
 }
 \arguments{
-\item{x}{Een numerieke vector}
+\item{x}{Een object (vector, data frame, lijst, etc) waar de functies op toegepast worden.}
 }
 \value{
-Een reactable-tabel
+Een reactable tabel met functienaam, omschrijving en resultaat.
 }
 \description{
-Genereert een reactable-tabel met uitkomsten van alle statistiekfuncties op een vector.
-}
-\examples{
-sam(c(1, 2, 2, 3, NA))
+Samenvattingstabel van verschillende statistische functies
 }
