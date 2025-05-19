@@ -1,13 +1,13 @@
-#' Toon overzicht van functies in het package
+#' Overzicht van functies in het package
 #'
 #' Genereert een interactieve tabel met alle functies in het \code{ministate} package en hun argumenten.
 #'
-#' @return Een reactable-tabel met functienamen en argumenten.
+#' @return Een reactable-tabel met functienamen en hun argumenten.
 #' @export
 #'
 #' @examples
-#' show_functions_table()
-show_functions_table <- function() {
+#' sam()
+sam <- function() {
   pkg_name <- "ministate"
   objs <- ls(envir = asNamespace(pkg_name))
   funs <- objs[sapply(objs, function(x) is.function(get(x, envir = asNamespace(pkg_name))))]
@@ -36,5 +36,3 @@ show_functions_table <- function() {
     )
   )
 }
-
-
