@@ -45,7 +45,7 @@ kwartielen(x)
 iqr(x)
 sdev(x)
 
-sam()
+sam(x)
 ```
 
 
@@ -71,7 +71,7 @@ iqr(x)
 sdev(x)
 
 
-sam()
+sam(x)
 ```
 
 
@@ -94,7 +94,7 @@ kwartielen(x)
 iqr(x)
 sdev(x)
 
-sam()
+sam(x)
 
 ```
 
