@@ -34,7 +34,7 @@ Met een simple dataset.
 x <- c(1, 2, 2, 3, NA)
 
 # Basisstatistieken
-gemiddelde(x)
+gem(x)
 med(x)
 modus(x)
 n(x)
@@ -59,7 +59,7 @@ Complexe dataset met negatieve waarden, decimalen en uitschieters
 set.seed(42)
 x <- c(rnorm(40, mean = 100.5, sd = 15.2), -20, 0, 200, 500, NA, NA)
 
-gemiddelde(x)
+gem(x)
 med(x)
 modus(x)
 n(x)
@@ -83,7 +83,7 @@ data("faithful")
 x <- faithful$eruptions
 
 # Statistieken toepassen
-gemiddelde(x)
+gem(x)
 med(x)
 modus(x)
 n(x)
